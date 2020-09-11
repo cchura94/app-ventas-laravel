@@ -1,0 +1,14 @@
+Levantar el servidor:
+    php artisan serve
+
+Lista de todas las rutas del proyecto
+    php artisan route:list
+
+Verificar la lista de comandos de artisan
+    php artisan list
+
+Para generar un controlador
+    php artisan make:controller ProductoController
+
+Para generar un controlador con recursos
+    php artisan make:controller CategoriaController -r
