@@ -26,4 +26,19 @@ class ProductoController extends Controller
     {
         return "Mostrando : " . $id;
     }
+
+    public function editar($id)
+    {
+        return view("admin.producto.editar");
+    }
+
+    public function modificar(Request $request, $id)
+    {
+        return $request;
+    }
+
+    public function eliminar($id)
+    {
+        return "Eliminando... $id";
+    }
 }

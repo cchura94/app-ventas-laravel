@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
 
 Route::get('/contactanos', function () {
@@ -52,8 +52,19 @@ Route::get("/producto", "ProductoController@listar");
 Route::get("/producto/crear", 'ProductoController@nuevo');
 // Guardar Datos de producto
 Route::post("/producto", "ProductoController@guardar");
-
+//Ruta para Mostrar un producto
 Route::get("/producto/{id}", "ProductoController@mostrar");
+
+//Ruta para cargar un formulario de edicion
+Route::get("/producto/{id}/editar", "ProductoController@editar");
+//Ruta para modificar un recurso
+Route::put("/producto/{id}", "ProductoController@modificar");
+
+// Para Eliminar un recurso de Producto
+Route::delete("/producto/{id}", "ProductoController@eliminar");
 
 //Controlador con recursos
 Route::resource("/categoria", "CategoriaController");
+Route::resource("cliente", "ClienteController");
+Route::resource("pedido", "PedidoController");
+Route::resource("usuario", "UsuarioController");
