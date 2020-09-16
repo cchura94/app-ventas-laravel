@@ -1,6 +1,9 @@
 Levantar el servidor:
     php artisan serve
 
+Levnatar el servidor en otro Host y puerto
+    php artisan serve --host=0.0.0.0 --port=9000
+
 Lista de todas las rutas del proyecto
     php artisan route:list
 

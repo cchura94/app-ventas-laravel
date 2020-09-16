@@ -1,3 +1,6 @@
+@extends('layouts.admin')
+
+@section('contenedor')
 <h1>Nuevo Producto</h1>
 
 <form action="/producto" method="post">
@@ -19,3 +22,5 @@
     <br>
     <input type="submit">
 </form>
+
+@endsection

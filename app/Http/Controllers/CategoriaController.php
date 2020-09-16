@@ -14,6 +14,7 @@ class CategoriaController extends Controller
     public function index()
     {
         //listar
+        return view("admin.categoria.listar");
     }
 
     /**
@@ -24,6 +25,7 @@ class CategoriaController extends Controller
     public function create()
     {
         // Crear
+        return view("admin.categoria.crear");
     }
 
     /**
@@ -56,7 +58,7 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view("admin.categoria.editar");
     }
 
     /**
