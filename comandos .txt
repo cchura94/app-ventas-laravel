@@ -15,3 +15,22 @@ Para generar un controlador
 
 Para generar un controlador con recursos
     php artisan make:controller CategoriaController -r
+
+Para generar la migracion separado
+    php artisan make:migration create_clientes_table
+
+Para Generar el model separado
+    php artisan make:model Cliente
+
+Para Generar el model + migration 
+    php artisan make:model Producto -m
+
+COmandos para migracion
+ - Ver el estado de migraciones
+    php artisan migrate:status
+
+- Migrar las tablas o migraciones faltantes
+    php artisan migrate
+
+- Retroceder una version atras de la migracion
+    php artisan migrate:rollback
