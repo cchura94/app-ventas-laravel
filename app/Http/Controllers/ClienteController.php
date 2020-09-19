@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Cliente;
+use Illuminate\Support\Facades\DB;
+
 class ClienteController extends Controller
 {
     /**
@@ -13,7 +16,13 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        //return DB::select("select * from clientes");
+        //return DB::table("clientes")->get();
+        $clientes = Cliente::All();
+        //return view("admin.cliente.listar", ["clientes" => $clientes]);
+        //return view("admin.cliente.listar")->with("clientes", $clientes);
+        return view("admin.cliente.listar", compact("clientes"));
+
     }
 
     /**
@@ -23,7 +32,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.cliente.crear");
     }
 
     /**
@@ -34,7 +43,22 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "nombres" => "required|min:2|max:30",
+            "nombres" => "required|min:2|max:30",
+            "ci_nit" => "unique:clientes|regex:/^\d{5,10}([\s-]\d[A-Z])?$/"
+        ]);
+
+
+        $clie = new Cliente;
+        $clie->nombres = $request->nombres;
+        $clie->apellidos = $request->apellidos;
+        $clie->ci_nit = $request->ci_nit;
+        $clie->telefono = $request->telefono;
+        $clie->empresa = $request->empresa;
+        $clie->save();
+
+        return redirect("/cliente");
     }
 
     /**
