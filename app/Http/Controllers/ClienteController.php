@@ -18,7 +18,8 @@ class ClienteController extends Controller
     {
         //return DB::select("select * from clientes");
         //return DB::table("clientes")->get();
-        $clientes = Cliente::All();
+        //$clientes = Cliente::All();
+        $clientes = Cliente::orderby('id', 'desc')->paginate(5);
         //return view("admin.cliente.listar", ["clientes" => $clientes]);
         //return view("admin.cliente.listar")->with("clientes", $clientes);
         return view("admin.cliente.listar", compact("clientes"));
@@ -43,9 +44,10 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        //Validaciones de lado del servidor
         $request->validate([
             "nombres" => "required|min:2|max:30",
-            "nombres" => "required|min:2|max:30",
+            "apellidos" => "required|min:2|max:30",
             "ci_nit" => "unique:clientes|regex:/^\d{5,10}([\s-]\d[A-Z])?$/"
         ]);
 
@@ -58,7 +60,7 @@ class ClienteController extends Controller
         $clie->empresa = $request->empresa;
         $clie->save();
 
-        return redirect("/cliente");
+        return redirect("/cliente")->with("ok", "El Cliente ha sido registrado");
     }
 
     /**
@@ -69,7 +71,8 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        return view("admin.cliente.mostrar", compact('cliente'));
     }
 
     /**
@@ -80,7 +83,8 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = Cliente::find($id);
+        return view("admin.cliente.editar", compact('cliente'));
     }
 
     /**
@@ -92,7 +96,23 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Validaciones de lado del servidor
+        $request->validate([
+            "nombres" => "required|min:2|max:30",
+            "apellidos" => "required|min:2|max:30",
+            "ci_nit" => "regex:/^\d{5,10}([\s-]\d[A-Z])?$/"
+        ]);
+
+        $clie = Cliente::find($id);
+        $clie->nombres = $request->nombres;
+        $clie->apellidos = $request->apellidos;
+        $clie->ci_nit = $request->ci_nit;
+        $clie->telefono = $request->telefono;
+        $clie->empresa = $request->empresa;
+        $clie->save();
+
+        return redirect("/cliente")->with("ok", "El Cliente ha sido Modificado");
+
     }
 
     /**
@@ -103,6 +123,14 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $clie = Cliente::find($id);
+        $clie->delete();
+        return redirect("/cliente")->with("ok", "El Cliente ha sido Eliminado");
+    }
+
+    public function obtenerClientes()
+    {
+        $clientes = Cliente::paginate(10);
+        return response()->json($clientes);
     }
 }
