@@ -46,25 +46,31 @@ Route::get("/nombre/{nombre}/edad/{ed}", function($nom, $edad){
     return ["nombre" => $nom, "edad" => $edad];
 });
 
-// Rutas conectados a Controladores
-Route::get("/producto", "ProductoController@listar");
-// Cargar el formulario de producto
-Route::get("/producto/crear", 'ProductoController@nuevo');
-// Guardar Datos de producto
-Route::post("/producto", "ProductoController@guardar");
-//Ruta para Mostrar un producto
-Route::get("/producto/{id}", "ProductoController@mostrar");
+Route::prefix('admin')->group(function () {
+    //Nuevo Pedido de Cliente
+    Route::get("/cliente/{id}/nuevo_pedido", "ClienteController@agregarPedido")->name('addpedido');
+    Route::post("/pedido/nueva_venta", "PedidoController@nueva_venta")->name('nueva_venta');
 
-//Ruta para cargar un formulario de edicion
-Route::get("/producto/{id}/editar", "ProductoController@editar");
-//Ruta para modificar un recurso
-Route::put("/producto/{id}", "ProductoController@modificar");
+    // Rutas conectados a Controladores
+    Route::get("/producto", "ProductoController@listar")->name('producto_listar');
+    // Cargar el formulario de producto
+    Route::get("/producto/crear", 'ProductoController@nuevo')->name('producto_crear');
+    // Guardar Datos de producto
+    Route::post("/producto", "ProductoController@guardar")->name('producto_guardar');
+    //Ruta para Mostrar un producto
+    Route::get("/producto/{id}", "ProductoController@mostrar")->name('producto_mostrar');
 
-// Para Eliminar un recurso de Producto
-Route::delete("/producto/{id}", "ProductoController@eliminar");
+    //Ruta para cargar un formulario de edicion
+    Route::get("/producto/{id}/editar", "ProductoController@editar")->name('producto_editar');
+    //Ruta para modificar un recurso
+    Route::put("/producto/{id}", "ProductoController@modificar")->name('producto_modificar');
 
-//Controlador con recursos
-Route::resource("/categoria", "CategoriaController");
-Route::resource("cliente", "ClienteController");
-Route::resource("pedido", "PedidoController");
-Route::resource("usuario", "UsuarioController");
+    // Para Eliminar un recurso de Producto
+    Route::delete("/producto/{id}", "ProductoController@eliminar")->name('producto_eliminar');
+
+    //Controlador con recursos
+    Route::resource("/categoria", "CategoriaController");
+    Route::resource("cliente", "ClienteController");
+    Route::resource("pedido", "PedidoController");
+    Route::resource("usuario", "UsuarioController");
+});

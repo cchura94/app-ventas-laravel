@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Cliente;
+use App\Producto;
 use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
@@ -60,7 +61,7 @@ class ClienteController extends Controller
         $clie->empresa = $request->empresa;
         $clie->save();
 
-        return redirect("/cliente")->with("ok", "El Cliente ha sido registrado");
+        return redirect("/admin/cliente")->with("ok", "El Cliente ha sido registrado");
     }
 
     /**
@@ -111,7 +112,7 @@ class ClienteController extends Controller
         $clie->empresa = $request->empresa;
         $clie->save();
 
-        return redirect("/cliente")->with("ok", "El Cliente ha sido Modificado");
+        return redirect("/admin/cliente")->with("ok", "El Cliente ha sido Modificado");
 
     }
 
@@ -125,12 +126,19 @@ class ClienteController extends Controller
     {
         $clie = Cliente::find($id);
         $clie->delete();
-        return redirect("/cliente")->with("ok", "El Cliente ha sido Eliminado");
+        return redirect("/admin/cliente")->with("ok", "El Cliente ha sido Eliminado");
     }
 
     public function obtenerClientes()
     {
         $clientes = Cliente::paginate(10);
         return response()->json($clientes);
+    }
+
+    public function agregarPedido($id)
+    {
+        $clie = Cliente::find($id);
+        $productos = Producto::All(); 
+        return view("admin.cliente.nuevo_pedido", compact('clie', 'productos'));
     }
 }

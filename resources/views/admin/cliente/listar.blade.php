@@ -34,6 +34,7 @@
             <td>{{ $clie->empresa }}</td>
             <td>{{ $clie->telefono }}</td>
             <td>
+              <a href="{{ route('addpedido', $clie->id) }}" class="btn btn-outline-info">Realizar Nuevo Pedido</a>
             <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#Modal{{$clie->id}}">
   ver2

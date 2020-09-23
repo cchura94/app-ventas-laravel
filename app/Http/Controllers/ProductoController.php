@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request; // 
+use App\Producto;
 
 class ProductoController extends Controller
 {
     public function listar()
     {
-        return "Lista de Producto";
+        $productos = Producto::paginate(10);
+        return view("admin.producto.listar", compact('productos'));
     }
 
     public function nuevo()
@@ -18,8 +20,28 @@ class ProductoController extends Controller
 
     public function guardar(Request $request)
     {
-        echo "GUARDANDO...";
-        return $request;
+        $request->validate([
+            "nombre" => "required|min:3|max:200",
+            "precio" => "required"
+        ]);
+
+        $nombre_imagen = '';
+        // subir la imagen
+        if($file = $request->file('imagen')){
+            //obtener el nombre de la imagen
+            $nombre_imagen = $file->getClientOriginalName();
+            $file->move("imagenes", $nombre_imagen);
+        }
+
+        $prod = new Producto;
+        $prod->nombre = $request->nombre;
+        $prod->precio = $request->precio;
+        $prod->cantidad = $request->cantidad;
+        $prod->detalle = $request->detalle;
+        $prod->imagen = $nombre_imagen;
+        $prod->save();
+
+        return redirect("/admin/producto")->with("ok", "Producto Registrado");
     }
 
     public function mostrar($id)

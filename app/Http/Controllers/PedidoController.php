@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Pedido;
+use Carbon\Carbon;
+
 class PedidoController extends Controller
 {
     /**
@@ -13,7 +16,8 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        //
+
+        return view("admin.pedido.listar");
     }
 
     /**
@@ -80,5 +84,16 @@ class PedidoController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function nueva_venta(Request $request)
+    {
+        $pedido = new Pedido;
+        $pedido->cliente_id = $request->cliente_id;
+        $pedido->fecha_pedido = Carbon::now();
+        $pedido->monto_total = 0;
+        $pedido->save();
+        $pedido->productos()->attach($request->productos);
+        return $request;
     }
 }

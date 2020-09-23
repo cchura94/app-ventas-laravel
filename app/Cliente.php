@@ -14,4 +14,8 @@ class Cliente extends Model
     protected $keyType = 'string';
 
     public $timestamps = false;*/
+    public function pedidos()
+    {
+        return $this->hasMany('App\Pedido');
+    }
 }
