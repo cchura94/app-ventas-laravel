@@ -49,7 +49,8 @@ class PedidoController extends Controller
      */
     public function show($id)
     {
-        //
+        $pedido = Pedido::find($id);
+        return view("admin.pedido.mostrar", compact('pedido'));
     }
 
     /**
@@ -93,7 +94,8 @@ class PedidoController extends Controller
         $pedido->fecha_pedido = Carbon::now();
         $pedido->monto_total = 0;
         $pedido->save();
-        $pedido->productos()->attach($request->productos);
-        return $request;
+        //return $request;
+        $pedido->productos()->attach($request->producto);
+        return redirect("/admin/pedido/".$pedido->id);
     }
 }

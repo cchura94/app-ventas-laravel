@@ -15,16 +15,24 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->q){
+            $clientes = Cliente::where('ci_nit', 'like', '%'.$request->q.'%')
+            ->orWhere('nombres', 'like', '%'.$request->q.'%')
+            ->paginate(5);
+        }else{
+            
         //return DB::select("select * from clientes");
         //return DB::table("clientes")->get();
         //$clientes = Cliente::All();
         $clientes = Cliente::orderby('id', 'desc')->paginate(5);
         //return view("admin.cliente.listar", ["clientes" => $clientes]);
         //return view("admin.cliente.listar")->with("clientes", $clientes);
-        return view("admin.cliente.listar", compact("clientes"));
+        
 
+        }
+        return view("admin.cliente.listar", compact("clientes"));
     }
 
     /**

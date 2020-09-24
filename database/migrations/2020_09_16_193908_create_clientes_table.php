@@ -20,6 +20,9 @@ class CreateClientesTable extends Migration
             $table->string("empresa", 30)->nullable();
             $table->string("telefono", 30)->nullable();
             $table->string("ci_nit", 15);
+            $table->bigInteger("user_id")->unsigned()->nullable();
+
+            $table->foreign("user_id")->references("id")->on("users");
             
             $table->timestamps();
         });

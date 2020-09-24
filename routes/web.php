@@ -49,6 +49,7 @@ Route::get("/nombre/{nombre}/edad/{ed}", function($nom, $edad){
 Route::prefix('admin')->group(function () {
     //Nuevo Pedido de Cliente
     Route::get("/cliente/{id}/nuevo_pedido", "ClienteController@agregarPedido")->name('addpedido');
+    
     Route::post("/pedido/nueva_venta", "PedidoController@nueva_venta")->name('nueva_venta');
 
     // Rutas conectados a Controladores
@@ -74,3 +75,6 @@ Route::prefix('admin')->group(function () {
     Route::resource("pedido", "PedidoController");
     Route::resource("usuario", "UsuarioController");
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

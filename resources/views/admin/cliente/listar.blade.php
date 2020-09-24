@@ -12,6 +12,11 @@
         <p>{{ session('ok') }}</p>
     </div>
 @endif
+
+<form action="{{ route('cliente.index') }}" method="get">
+  <input type="search" name="q">
+</form>
+
 <table class="table table-striped table-hover">
     <thead>
         <tr>
